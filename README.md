@@ -26,8 +26,6 @@ copy apps\frontend\.env.example apps\frontend\.env.local
 
 Edit `apps/backend/.env` so `DATABASE_*` matches your MySQL instance. Set `NEXT_PUBLIC_API_URL` in `apps/frontend/.env.local` to the same API base URL you use for the backend (see the table above).
 
-## Phase A — local development (no Docker)
-
 ### 1. Database
 
 Create an empty database named `lead-tracker` (hyphen requires backticks in MySQL):
