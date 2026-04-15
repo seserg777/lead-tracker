@@ -14,7 +14,7 @@ pnpm dev
 bun dev
 ```
 
-The app listens on [http://localhost:3100](http://localhost:3100). Configure `NEXT_PUBLIC_API_URL` in `.env.local` pointing at the Nest API (e.g. `http://localhost:3101`). On Windows, prefer `http://127.0.0.1:3101` instead of `localhost` so the browser and Node resolve to IPv4; `localhost` may use `::1` while the API listens only on IPv4, which shows **Failed to fetch** and breaks e2e (`ECONNREFUSED ::1:3101`).
+The app listens on [http://localhost:3100](http://localhost:3100). Configure `NEXT_PUBLIC_API_URL` in `.env.local` pointing at the Nest API (e.g. `http://localhost:3101`). On localhost, prefer `http://127.0.0.1:3101` instead of `localhost` so the browser and Node resolve to IPv4; `localhost` may use `::1` while the API listens only on IPv4, which shows **Failed to fetch** and breaks e2e (`ECONNREFUSED ::1:3101`).
 
 ## E2E tests (Playwright)
 
