@@ -3,19 +3,80 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-background: #f1f5f9;
+  --color-foreground: #101828;
+  --color-surface: #ffffff;
+  --color-muted: #f8fafc;
+  --color-muted-foreground: #667085;
+  --color-border: #e4e7ec;
+  --color-primary: #465fff;
+  --color-primary-hover: #3641e5;
+  --color-primary-foreground: #ffffff;
+  --color-primary-soft: #ecf3ff;
+  --color-ring-focus: rgb(70 95 255 / 0.22);
+  --color-sidebar: #ffffff;
+  --color-sidebar-border: #e4e7ec;
+  --color-sidebar-foreground: #344054;
+  --color-danger: #d92d20;
+  --color-danger-foreground: #ffffff;
+  --color-danger-soft: #fef3f2;
+  --color-success: #039855;
+  --color-success-foreground: #ffffff;
+  --color-success-soft: #ecfdf3;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+.dark {
+  --color-background: #0f172a;
+  --color-foreground: #f8fafc;
+  --color-surface: #1e293b;
+  --color-muted: #334155;
+  --color-muted-foreground: #94a3b8;
+  --color-border: #334155;
+  --color-primary: #6b7cff;
+  --color-primary-hover: #5567e8;
+  --color-primary-foreground: #ffffff;
+  --color-primary-soft: #1e293b;
+  --color-ring-focus: rgb(107 124 255 / 0.35);
+  --color-sidebar: #0f172a;
+  --color-sidebar-border: #334155;
+  --color-sidebar-foreground: #e2e8f0;
+  --color-danger: #f97066;
+  --color-danger-foreground: #0f172a;
+  --color-danger-soft: #450a0a;
+  --color-success: #32d583;
+  --color-success-foreground: #0f172a;
+  --color-success-soft: #053321;
+}
+
+@layer base {
+  body {
+    @apply bg-background font-sans text-foreground antialiased;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .ui-input {
+    @apply rounded-lg border border-border bg-surface px-3 py-2 text-sm text-foreground shadow-sm transition-colors placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-[color:var(--color-ring-focus)];
+  }
+  .ui-select {
+    @apply ui-input cursor-pointer;
+  }
+  .ui-textarea {
+    @apply ui-input resize-y;
+  }
+  .ui-btn-primary {
+    @apply inline-flex items-center justify-center rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow-sm transition-colors hover:bg-[color:var(--color-primary-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-ring-focus)] focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
+  }
+  .ui-btn-secondary {
+    @apply inline-flex items-center justify-center rounded-lg border border-border bg-surface px-4 py-2 text-sm font-medium text-foreground shadow-sm transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-ring-focus)] focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
+  }
+  .ui-btn-danger {
+    @apply inline-flex items-center justify-center rounded-lg border border-red-200 bg-surface px-4 py-2 text-sm font-medium text-red-700 transition-colors hover:bg-red-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400/40 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
+  }
+  .ui-card {
+    @apply rounded-xl border border-border bg-surface p-4 shadow-card sm:p-6;
+  }
+  .ui-alert-danger {
+    @apply rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800;
+  }
 }

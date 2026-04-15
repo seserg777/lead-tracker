@@ -67,37 +67,40 @@ export function CreateLeadForm({
     }
   }
   return (
-    <form onSubmit={(e) => void handleCreate(e)} className="grid gap-3 md:grid-cols-2">
-      <label className="flex flex-col gap-1 text-sm">
-        <span className="font-medium text-zinc-700">Name *</span>
+    <form
+      onSubmit={(e) => void handleCreate(e)}
+      className="grid gap-4 md:grid-cols-2"
+    >
+      <label className="flex flex-col gap-1.5 text-sm">
+        <span className="font-medium text-foreground">Name *</span>
         <input
-          className="rounded border border-zinc-300 px-3 py-2"
+          className="ui-input"
           value={formName}
           onChange={(e) => setFormName(e.target.value)}
           required
         />
       </label>
-      <label className="flex flex-col gap-1 text-sm">
-        <span className="font-medium text-zinc-700">Email</span>
+      <label className="flex flex-col gap-1.5 text-sm">
+        <span className="font-medium text-foreground">Email</span>
         <input
           type="email"
-          className="rounded border border-zinc-300 px-3 py-2"
+          className="ui-input"
           value={formEmail}
           onChange={(e) => setFormEmail(e.target.value)}
         />
       </label>
-      <label className="flex flex-col gap-1 text-sm">
-        <span className="font-medium text-zinc-700">Company</span>
+      <label className="flex flex-col gap-1.5 text-sm">
+        <span className="font-medium text-foreground">Company</span>
         <input
-          className="rounded border border-zinc-300 px-3 py-2"
+          className="ui-input"
           value={formCompany}
           onChange={(e) => setFormCompany(e.target.value)}
         />
       </label>
-      <label className="flex flex-col gap-1 text-sm">
-        <span className="font-medium text-zinc-700">Status</span>
+      <label className="flex flex-col gap-1.5 text-sm">
+        <span className="font-medium text-foreground">Status</span>
         <select
-          className="rounded border border-zinc-300 px-3 py-2"
+          className="ui-select"
           value={formStatus}
           onChange={(e) =>
             setFormStatus(e.target.value as LeadStatus)
@@ -110,33 +113,33 @@ export function CreateLeadForm({
           ))}
         </select>
       </label>
-      <label className="flex flex-col gap-1 text-sm">
-        <span className="font-medium text-zinc-700">Value</span>
+      <label className="flex flex-col gap-1.5 text-sm">
+        <span className="font-medium text-foreground">Value</span>
         <input
-          className="rounded border border-zinc-300 px-3 py-2"
+          className="ui-input"
           value={formValue}
           onChange={(e) => setFormValue(e.target.value)}
           placeholder="Optional"
         />
       </label>
-      <label className="md:col-span-2 flex flex-col gap-1 text-sm">
-        <span className="font-medium text-zinc-700">Notes</span>
+      <label className="md:col-span-2 flex flex-col gap-1.5 text-sm">
+        <span className="font-medium text-foreground">Notes</span>
         <textarea
-          className="min-h-[72px] rounded border border-zinc-300 px-3 py-2"
+          className="ui-textarea min-h-[72px]"
           value={formNotes}
           onChange={(e) => setFormNotes(e.target.value)}
         />
       </label>
-      <div className="md:col-span-2 flex items-center gap-3">
+      <div className="md:col-span-2 flex flex-wrap items-center gap-3">
         <button
           type="submit"
           disabled={creating}
-          className="rounded bg-zinc-900 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800 disabled:opacity-50"
+          className="ui-btn-primary"
         >
           {creating ? 'Creating…' : 'Create lead'}
         </button>
         {createError !== null ? (
-          <span className="text-sm text-red-600">{createError}</span>
+          <span className="text-sm text-danger">{createError}</span>
         ) : null}
       </div>
     </form>
