@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useCallback, useEffect, useState } from 'react';
-import { fetchLeads, LEAD_STATUS_OPTIONS } from '@/lib/api-client';
+import { deleteLead, fetchLeads, LEAD_STATUS_OPTIONS } from '@/lib/api-client';
 import {
   getLeadStatusBadgeClassName,
   getLeadStatusLabel,
@@ -24,6 +24,7 @@ export default function LeadsPage(): React.ReactElement {
   const [order, setOrder] = useState<'asc' | 'desc'>('desc');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [deletingId, setDeletingId] = useState<number | null>(null);
 
   const load = useCallback(async (): Promise<void> => {
     setLoading(true);
@@ -71,6 +72,28 @@ export default function LeadsPage(): React.ReactElement {
     setSort('createdAt');
     setOrder('desc');
     setPage(1);
+  }
+
+  async function handleDeleteLead(leadId: number): Promise<void> {
+    if (!window.confirm('Delete this lead? This cannot be undone.')) {
+      return;
+    }
+    setDeletingId(leadId);
+    setError(null);
+    try {
+      await deleteLead(leadId);
+      const isLastOnPage = items.length === 1;
+      const shouldGoToPrevPage = isLastOnPage && page > 1;
+      if (shouldGoToPrevPage) {
+        setPage((p) => Math.max(1, p - 1));
+      } else {
+        await load();
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to delete lead');
+    } finally {
+      setDeletingId(null);
+    }
   }
 
   return (
@@ -220,12 +243,58 @@ export default function LeadsPage(): React.ReactElement {
                       {new Date(lead.updatedAt).toLocaleString()}
                     </td>
                     <td className="px-4 py-2 text-right">
-                      <Link
-                        href={`/leads/${lead.id}`}
-                        className="text-sm font-medium text-blue-700 hover:underline"
-                      >
-                        Open
-                      </Link>
+                      <div className="inline-flex items-center justify-end gap-2">
+                        <Link
+                          href={`/leads/${lead.id}`}
+                          aria-label="Edit lead"
+                          title="Edit lead"
+                          className={`inline-flex h-9 w-9 items-center justify-center rounded-md border border-zinc-200 bg-white text-zinc-600 transition-colors hover:border-zinc-300 hover:bg-zinc-50 hover:text-zinc-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 ${
+                            deletingId === lead.id
+                              ? 'pointer-events-none opacity-50'
+                              : ''
+                          }`}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={1.5}
+                            stroke="currentColor"
+                            className="h-4 w-4"
+                            aria-hidden
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
+                            />
+                          </svg>
+                        </Link>
+                        <button
+                          type="button"
+                          aria-label="Delete lead"
+                          title="Delete lead"
+                          disabled={deletingId !== null}
+                          onClick={() => void handleDeleteLead(lead.id)}
+                          className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-red-200 bg-white text-red-600 transition-colors hover:border-red-300 hover:bg-red-50 hover:text-red-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={1.5}
+                            stroke="currentColor"
+                            className="h-4 w-4"
+                            aria-hidden
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="m14.74 9-.346 9m-4.788 0L9.26 9m9.688-3.921V8.25a2.25 2.25 0 0 0-2.25-2.25h-7.5a2.25 2.25 0 0 0-2.25 2.25v-.75a2.25 2.25 0 0 1 2.25-2.25h7.5a2.25 2.25 0 0 1 2.25 2.25v.75m-13.5-3V18a2.25 2.25 0 0 0 2.25 2.25h7.5A2.25 2.25 0 0 0 18 18v-9"
+                            />
+                          </svg>
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))}
