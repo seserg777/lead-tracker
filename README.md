@@ -24,7 +24,7 @@ copy apps\backend\.env.example apps\backend\.env
 copy apps\frontend\.env.example apps\frontend\.env.local
 ```
 
-The committed [apps/backend/.env.example](apps/backend/.env.example) is set up for **OpenServer / OSPanel**: host `mysql-8.0.local`, database `lead-tracker`, user `root`, **empty password**. Adjust if your MySQL differs. Set `NEXT_PUBLIC_API_URL` in `apps/frontend/.env.local` to match the API URL.
+Edit `apps/backend/.env` so `DATABASE_*` matches your MySQL instance. Set `NEXT_PUBLIC_API_URL` in `apps/frontend/.env.local` to the same API base URL you use for the backend (see the table above).
 
 ## Phase A — local development (no Docker)
 
