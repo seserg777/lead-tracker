@@ -8,7 +8,9 @@
   "scripts": {
     "dev": "turbo dev",
     "build": "turbo build",
-    "lint": "turbo lint"
+    "lint": "turbo lint",
+    "docker:up": "docker compose up --build",
+    "docker:stop": "docker compose stop"
   },
   "devDependencies": {
     "turbo": "^2.4.4"
