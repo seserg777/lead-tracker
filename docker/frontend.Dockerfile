@@ -2,7 +2,7 @@ FROM node:22-alpine AS build
 WORKDIR /repo
 COPY package.json package-lock.json ./
 COPY apps/frontend ./apps/frontend
-ARG NEXT_PUBLIC_API_URL=http://localhost:3101
+ARG NEXT_PUBLIC_API_URL=http://127.0.0.1:3101
 ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
 RUN npm ci
 RUN npm run build --workspace=frontend

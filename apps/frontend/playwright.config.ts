@@ -26,7 +26,7 @@ export default defineConfig({
     video: 'on',
     screenshot: 'on',
     headless: process.env.CI === 'true',
-    slowMo: slowMoMs,
+    ...(slowMoMs !== undefined ? { launchOptions: { slowMo: slowMoMs } } : {}),
   },
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
 });

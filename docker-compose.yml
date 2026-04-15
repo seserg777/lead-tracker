@@ -25,7 +25,7 @@ services:
       DATABASE_USER: root
       DATABASE_PASSWORD: root
       DATABASE_NAME: lead_tracker
-      CORS_ORIGIN: http://localhost:3000,http://localhost:3100
+      CORS_ORIGIN: http://localhost:3000,http://localhost:3100,http://127.0.0.1:3000,http://127.0.0.1:3100
     depends_on:
       mysql:
         condition: service_healthy
@@ -35,7 +35,8 @@ services:
       context: .
       dockerfile: docker/frontend.Dockerfile
       args:
-        NEXT_PUBLIC_API_URL: http://localhost:3101
+        # Use IPv4 so Windows browsers do not call ::1 while the published port is IPv4-only
+        NEXT_PUBLIC_API_URL: http://127.0.0.1:3101
     ports:
       - "3000:3000"
     depends_on:
