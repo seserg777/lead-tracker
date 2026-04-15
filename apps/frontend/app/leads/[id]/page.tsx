@@ -157,9 +157,12 @@ export default function LeadDetailPage(): React.ReactElement {
 
   if (Number.isNaN(leadId)) {
     return (
-      <div className="mx-auto max-w-3xl px-4 py-8">
-        <p className="text-red-600">Invalid lead id.</p>
-        <Link href="/leads" className="mt-4 inline-block text-blue-700">
+      <div className="mx-auto max-w-3xl">
+        <p className="text-danger">Invalid lead id.</p>
+        <Link
+          href="/leads"
+          className="mt-4 inline-block text-sm font-medium text-primary hover:underline"
+        >
           Back to leads
         </Link>
       </div>
@@ -167,76 +170,73 @@ export default function LeadDetailPage(): React.ReactElement {
   }
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-8">
-      <div className="mb-6 flex items-center justify-between gap-4">
+    <div className="mx-auto max-w-3xl">
+      <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <Link
           href="/leads"
-          className="text-sm font-medium text-blue-700 hover:underline"
+          className="text-sm font-medium text-primary hover:underline"
         >
           ← Back to leads
         </Link>
         {lead !== null ? (
-          <span className="text-sm text-zinc-500">
+          <span className="text-sm text-muted-foreground">
             Lead #{lead.id} · created{' '}
             {new Date(lead.createdAt).toLocaleString()}
           </span>
         ) : null}
       </div>
       {error !== null && lead === null && !loading ? (
-        <div
-          className="mb-4 rounded border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800"
-          role="alert"
-        >
+        <div className="ui-alert-danger mb-4" role="alert">
           {error}
         </div>
       ) : null}
       {loading ? (
-        <p className="text-sm text-zinc-600">Loading lead…</p>
+        <p className="text-sm text-muted-foreground">Loading lead…</p>
       ) : lead === null ? (
-        <p className="text-zinc-600">Lead not found.</p>
+        <p className="text-muted-foreground">Lead not found.</p>
       ) : (
         <>
-          <h1 className="mb-6 text-2xl font-semibold text-zinc-900">
+          <h1 className="mb-6 text-2xl font-semibold tracking-tight text-foreground">
             {lead.name}
           </h1>
-          <section className="mb-8 rounded-lg border border-zinc-200 bg-white p-4 shadow-sm">
-            <h2 className="mb-3 text-lg font-medium text-zinc-800">
+          <section className="ui-card mb-8">
+            <h2 className="mb-4 text-lg font-semibold text-foreground">
               Edit lead
             </h2>
             <form
               onSubmit={(e) => void handleSave(e)}
-              className="grid gap-3 md:grid-cols-2"
+              className="grid gap-4 md:grid-cols-2"
             >
-              <label className="flex flex-col gap-1 text-sm">
-                <span className="font-medium text-zinc-700">Name *</span>
+              <label className="flex flex-col gap-1.5 text-sm">
+                <span className="font-medium text-foreground">Name *</span>
                 <input
-                  className="rounded border border-zinc-300 px-3 py-2"
+                  className="ui-input"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   required
                 />
               </label>
-              <label className="flex flex-col gap-1 text-sm">
-                <span className="font-medium text-zinc-700">Email</span>
+              <label className="flex flex-col gap-1.5 text-sm">
+                <span className="font-medium text-foreground">Email</span>
                 <input
                   type="email"
-                  className="rounded border border-zinc-300 px-3 py-2"
+                  className="ui-input"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </label>
-              <label className="flex flex-col gap-1 text-sm">
-                <span className="font-medium text-zinc-700">Company</span>
+              <label className="flex flex-col gap-1.5 text-sm">
+                <span className="font-medium text-foreground">Company</span>
                 <input
-                  className="rounded border border-zinc-300 px-3 py-2"
+                  className="ui-input"
                   value={company}
                   onChange={(e) => setCompany(e.target.value)}
                 />
               </label>
-              <label className="flex flex-col gap-1 text-sm">
-                <span className="font-medium text-zinc-700">Status</span>
+              <label className="flex flex-col gap-1.5 text-sm">
+                <span className="font-medium text-foreground">Status</span>
                 <select
-                  className="rounded border border-zinc-300 px-3 py-2"
+                  className="ui-select"
                   value={status}
                   onChange={(e) =>
                     setStatus(e.target.value as LeadStatus)
@@ -249,18 +249,18 @@ export default function LeadDetailPage(): React.ReactElement {
                   ))}
                 </select>
               </label>
-              <label className="flex flex-col gap-1 text-sm">
-                <span className="font-medium text-zinc-700">Value</span>
+              <label className="flex flex-col gap-1.5 text-sm">
+                <span className="font-medium text-foreground">Value</span>
                 <input
-                  className="rounded border border-zinc-300 px-3 py-2"
+                  className="ui-input"
                   value={value}
                   onChange={(e) => setValue(e.target.value)}
                 />
               </label>
-              <label className="md:col-span-2 flex flex-col gap-1 text-sm">
-                <span className="font-medium text-zinc-700">Notes</span>
+              <label className="md:col-span-2 flex flex-col gap-1.5 text-sm">
+                <span className="font-medium text-foreground">Notes</span>
                 <textarea
-                  className="min-h-[96px] rounded border border-zinc-300 px-3 py-2"
+                  className="ui-textarea min-h-[96px]"
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
                 />
@@ -269,7 +269,7 @@ export default function LeadDetailPage(): React.ReactElement {
                 <button
                   type="submit"
                   disabled={saving}
-                  className="rounded bg-zinc-900 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800 disabled:opacity-50"
+                  className="ui-btn-primary"
                 >
                   {saving ? 'Saving…' : 'Save changes'}
                 </button>
@@ -277,22 +277,22 @@ export default function LeadDetailPage(): React.ReactElement {
                   type="button"
                   disabled={deleting}
                   onClick={() => void handleDelete()}
-                  className="rounded border border-red-300 bg-white px-4 py-2 text-sm font-medium text-red-700 hover:bg-red-50 disabled:opacity-50"
+                  className="ui-btn-danger"
                 >
                   {deleting ? 'Deleting…' : 'Delete lead'}
                 </button>
                 {saveError !== null ? (
-                  <span className="text-sm text-red-600">{saveError}</span>
+                  <span className="text-sm text-danger">{saveError}</span>
                 ) : null}
               </div>
             </form>
           </section>
-          <section className="rounded-lg border border-zinc-200 bg-white p-4 shadow-sm">
-            <h2 className="mb-3 text-lg font-medium text-zinc-800">
+          <section className="ui-card">
+            <h2 className="mb-4 text-lg font-semibold text-foreground">
               Comments
             </h2>
             {comments.length === 0 ? (
-              <p className="mb-4 text-sm text-zinc-600">
+              <p className="mb-4 text-sm text-muted-foreground">
                 No comments yet. Add one below.
               </p>
             ) : (
@@ -300,10 +300,10 @@ export default function LeadDetailPage(): React.ReactElement {
                 {comments.map((c) => (
                   <li
                     key={c.id}
-                    className="rounded border border-zinc-100 bg-zinc-50 px-3 py-2 text-sm"
+                    className="rounded-lg border border-border bg-muted/50 px-3 py-2.5 text-sm"
                   >
-                    <p className="text-zinc-900">{c.text}</p>
-                    <p className="mt-1 text-xs text-zinc-500">
+                    <p className="text-foreground">{c.text}</p>
+                    <p className="mt-1 text-xs text-muted-foreground">
                       {new Date(c.createdAt).toLocaleString()}
                     </p>
                   </li>
@@ -312,31 +312,29 @@ export default function LeadDetailPage(): React.ReactElement {
             )}
             <form
               onSubmit={(e) => void handleAddComment(e)}
-              className="flex flex-col gap-2"
+              className="flex flex-col gap-3"
             >
-              <label className="flex flex-col gap-1 text-sm">
-                <span className="font-medium text-zinc-700">
+              <label className="flex flex-col gap-1.5 text-sm">
+                <span className="font-medium text-foreground">
                   New comment (1–500 characters)
                 </span>
                 <textarea
-                  className="min-h-[80px] rounded border border-zinc-300 px-3 py-2"
+                  className="ui-textarea min-h-[80px]"
                   value={commentText}
                   onChange={(e) => setCommentText(e.target.value)}
                   maxLength={500}
                 />
               </label>
-              <div className="flex items-center gap-3">
+              <div className="flex flex-wrap items-center gap-3">
                 <button
                   type="submit"
                   disabled={addingComment}
-                  className="rounded bg-zinc-900 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800 disabled:opacity-50"
+                  className="ui-btn-primary"
                 >
                   {addingComment ? 'Adding…' : 'Add comment'}
                 </button>
                 {commentError !== null ? (
-                  <span className="text-sm text-red-600">
-                    {commentError}
-                  </span>
+                  <span className="text-sm text-danger">{commentError}</span>
                 ) : null}
               </div>
             </form>

@@ -97,24 +97,31 @@ export default function LeadsPage(): React.ReactElement {
   }
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8">
+    <div>
       <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-        <h1 className="text-2xl font-semibold text-zinc-900">Leads</h1>
+        <div>
+          <h1 className="text-2xl font-semibold tracking-tight text-foreground">
+            Leads
+          </h1>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Search, filter, and manage your pipeline.
+          </p>
+        </div>
       </div>
-      <section className="mb-4 flex flex-col gap-3 rounded-lg border border-zinc-200 bg-zinc-50 p-4 md:flex-row md:flex-wrap md:items-end">
-        <label className="flex flex-col gap-1 text-sm">
-          <span className="font-medium text-zinc-700">Search</span>
+      <section className="mb-4 flex flex-col gap-3 rounded-xl border border-border bg-primary-soft p-4 shadow-sm md:flex-row md:flex-wrap md:items-end">
+        <label className="flex flex-col gap-1.5 text-sm">
+          <span className="font-medium text-foreground">Search</span>
           <input
-            className="w-full min-w-[200px] rounded border border-zinc-300 bg-white px-3 py-2 md:w-64"
+            className="ui-input w-full min-w-[200px] md:w-64"
             value={qInput}
             onChange={(e) => setQInput(e.target.value)}
             placeholder="Name, email, company"
           />
         </label>
-        <label className="flex flex-col gap-1 text-sm">
-          <span className="font-medium text-zinc-700">Status</span>
+        <label className="flex flex-col gap-1.5 text-sm">
+          <span className="font-medium text-foreground">Status</span>
           <select
-            className="rounded border border-zinc-300 bg-white px-3 py-2"
+            className="ui-select"
             value={status}
             onChange={(e) =>
               setStatus(
@@ -132,10 +139,10 @@ export default function LeadsPage(): React.ReactElement {
             ))}
           </select>
         </label>
-        <label className="flex flex-col gap-1 text-sm">
-          <span className="font-medium text-zinc-700">Sort</span>
+        <label className="flex flex-col gap-1.5 text-sm">
+          <span className="font-medium text-foreground">Sort</span>
           <select
-            className="rounded border border-zinc-300 bg-white px-3 py-2"
+            className="ui-select"
             value={sort}
             onChange={(e) =>
               setSort(e.target.value as 'createdAt' | 'updatedAt')
@@ -145,10 +152,10 @@ export default function LeadsPage(): React.ReactElement {
             <option value="updatedAt">Updated</option>
           </select>
         </label>
-        <label className="flex flex-col gap-1 text-sm">
-          <span className="font-medium text-zinc-700">Order</span>
+        <label className="flex flex-col gap-1.5 text-sm">
+          <span className="font-medium text-foreground">Order</span>
           <select
-            className="rounded border border-zinc-300 bg-white px-3 py-2"
+            className="ui-select"
             value={order}
             onChange={(e) =>
               setOrder(e.target.value as 'asc' | 'desc')
@@ -162,7 +169,7 @@ export default function LeadsPage(): React.ReactElement {
           <button
             type="button"
             onClick={() => applyFilters()}
-            className="rounded bg-white px-4 py-2 text-sm font-medium text-zinc-900 ring-1 ring-zinc-300 hover:bg-zinc-100"
+            className="ui-btn-secondary"
           >
             Apply
           </button>
@@ -170,28 +177,25 @@ export default function LeadsPage(): React.ReactElement {
             type="button"
             disabled={!hasNonDefaultFilters}
             onClick={() => resetFilters()}
-            className="rounded bg-white px-4 py-2 text-sm font-medium text-zinc-900 ring-1 ring-zinc-300 hover:bg-zinc-100 disabled:cursor-not-allowed disabled:opacity-40"
+            className="ui-btn-secondary disabled:cursor-not-allowed disabled:opacity-40"
           >
             Reset
           </button>
         </div>
       </section>
       {error !== null ? (
-        <div
-          className="mb-4 rounded border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800"
-          role="alert"
-        >
+        <div className="ui-alert-danger mb-4" role="alert">
           {error}
         </div>
       ) : null}
       {loading ? (
-        <p className="text-sm text-zinc-600">Loading leads…</p>
+        <p className="text-sm text-muted-foreground">Loading leads…</p>
       ) : total === 0 ? (
-        <p className="rounded border border-dashed border-zinc-300 bg-white px-4 py-8 text-center text-zinc-600">
+        <p className="rounded-xl border border-dashed border-border bg-surface px-4 py-10 text-center text-sm text-muted-foreground shadow-card">
           No leads match your criteria.{' '}
           <Link
             href="/leads/new"
-            className="font-medium text-blue-700 hover:underline"
+            className="font-medium text-primary hover:underline"
           >
             Create a lead
           </Link>{' '}
@@ -199,56 +203,56 @@ export default function LeadsPage(): React.ReactElement {
         </p>
       ) : (
         <>
-          <div className="overflow-x-auto rounded-lg border border-zinc-200 bg-white shadow-sm">
+          <div className="overflow-x-auto rounded-xl border border-border bg-surface shadow-card">
             <table className="min-w-full text-left text-sm">
-              <thead className="bg-zinc-100 text-zinc-700">
+              <thead className="bg-muted text-muted-foreground">
                 <tr>
-                  <th className="px-4 py-2 font-medium">Name</th>
-                  <th className="px-4 py-2 font-medium">Email</th>
-                  <th className="px-4 py-2 font-medium">Company</th>
-                  <th className="px-4 py-2 font-medium">Status</th>
-                  <th className="px-4 py-2 font-medium">Value</th>
-                  <th className="px-4 py-2 font-medium">Updated</th>
-                  <th className="px-4 py-2 font-medium" />
+                  <th className="px-4 py-3 font-medium">Name</th>
+                  <th className="px-4 py-3 font-medium">Email</th>
+                  <th className="px-4 py-3 font-medium">Company</th>
+                  <th className="px-4 py-3 font-medium">Status</th>
+                  <th className="px-4 py-3 font-medium">Value</th>
+                  <th className="px-4 py-3 font-medium">Updated</th>
+                  <th className="px-4 py-3 font-medium" />
                 </tr>
               </thead>
               <tbody>
                 {items.map((lead) => (
                   <tr
                     key={lead.id}
-                    className="border-t border-zinc-100 hover:bg-zinc-50"
+                    className="border-t border-border transition-colors hover:bg-muted/40"
                   >
-                    <td className="px-4 py-2 font-medium text-zinc-900">
+                    <td className="px-4 py-3 font-medium text-foreground">
                       {lead.name}
                     </td>
-                    <td className="px-4 py-2 text-zinc-700">
+                    <td className="px-4 py-3 text-muted-foreground">
                       {lead.email ?? '—'}
                     </td>
-                    <td className="px-4 py-2 text-zinc-700">
+                    <td className="px-4 py-3 text-muted-foreground">
                       {lead.company ?? '—'}
                     </td>
-                    <td className="px-4 py-2">
+                    <td className="px-4 py-3">
                       <span
                         className={getLeadStatusBadgeClassName(lead.status)}
                       >
                         {getLeadStatusLabel(lead.status)}
                       </span>
                     </td>
-                    <td className="px-4 py-2 text-zinc-700">
+                    <td className="px-4 py-3 text-muted-foreground">
                       {lead.value !== undefined && lead.value !== null
                         ? String(lead.value)
                         : '—'}
                     </td>
-                    <td className="px-4 py-2 text-zinc-600">
+                    <td className="px-4 py-3 text-sm text-muted-foreground">
                       {new Date(lead.updatedAt).toLocaleString()}
                     </td>
-                    <td className="px-4 py-2 text-right">
+                    <td className="px-4 py-3 text-right">
                       <div className="inline-flex items-center justify-end gap-2">
                         <Link
                           href={`/leads/${lead.id}`}
                           aria-label="Edit lead"
                           title="Edit lead"
-                          className={`inline-flex h-9 w-9 items-center justify-center rounded-md border border-zinc-200 bg-white text-zinc-600 transition-colors hover:border-zinc-300 hover:bg-zinc-50 hover:text-zinc-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 ${
+                          className={`inline-flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-surface text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-ring-focus)] focus-visible:ring-offset-2 ${
                             deletingId === lead.id
                               ? 'pointer-events-none opacity-50'
                               : ''
@@ -276,7 +280,7 @@ export default function LeadsPage(): React.ReactElement {
                           title="Delete lead"
                           disabled={deletingId !== null}
                           onClick={() => void handleDeleteLead(lead.id)}
-                          className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-red-200 bg-white text-red-600 transition-colors hover:border-red-300 hover:bg-red-50 hover:text-red-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+                          className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-red-200 bg-surface text-red-600 transition-colors hover:bg-red-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400/40 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -302,7 +306,7 @@ export default function LeadsPage(): React.ReactElement {
             </table>
           </div>
           <div className="mt-4 flex flex-col items-center justify-between gap-3 sm:flex-row">
-            <p className="text-sm text-zinc-600">
+            <p className="text-sm text-muted-foreground">
               Page {page} of {totalPages || 1} — {total} total
             </p>
             <div className="flex gap-2">
@@ -310,7 +314,7 @@ export default function LeadsPage(): React.ReactElement {
                 type="button"
                 disabled={page <= 1}
                 onClick={() => setPage((p) => Math.max(1, p - 1))}
-                className="rounded border border-zinc-300 bg-white px-3 py-1 text-sm disabled:opacity-40"
+                className="ui-btn-secondary px-3 py-1.5 text-sm disabled:opacity-40"
               >
                 Previous
               </button>
@@ -322,7 +326,7 @@ export default function LeadsPage(): React.ReactElement {
                     totalPages === 0 ? p : Math.min(totalPages, p + 1),
                   )
                 }
-                className="rounded border border-zinc-300 bg-white px-3 py-1 text-sm disabled:opacity-40"
+                className="ui-btn-secondary px-3 py-1.5 text-sm disabled:opacity-40"
               >
                 Next
               </button>
